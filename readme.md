@@ -1,7 +1,5 @@
 submodule使用方法
 
-
-
 ## 1. **创建你的主工程仓库（假设用 GitHub）**
 
 ```
@@ -22,7 +20,7 @@ git commit -m "init: main.c"
 
 ------
 
-## 2. **添加 FatFs 作为子模块**
+## 2. **添加 stm32h7rsxx_hal_driver 作为子模块**
 
 你可以用 [stm32h7rsxx_hal_driver 官方 GitHub 仓库](https://github.com/STMicroelectronics/stm32h7rsxx_hal_driver.git)：
 
@@ -113,4 +111,31 @@ git commit -m "fix: use FatFs R0.14b"
    ```
 
 ------
+
+上述中我使用 git clone --recursive <我的git仓库地址>  拉取了源码，现在我新添加了一些文件进去，git add .   再提交上传  会将子模块的代码也传输上去么？我不希望上传子模块
+
+## 1. **`git add .` 会不会上传子模块代码？**
+
+### **答案：不会上传子模块里的源码到主仓库！**
+
+- 当你在主仓库执行 `git add .`，**子模块（如 `third_party/fatfs/`）目录里的源码不会被直接提交到主仓库**。
+- 主仓库实际**只记录“子模块当前指向的 commit hash”**，而不会把子模块的全部源码纳入你的主仓库历史。
+- **只有你真的在子模块目录里`git add`并push到子模块仓库，才会改变子模块仓库的内容。**
+- 你主仓库只要`git add .`，再`git commit`，上传的是你主工程的变更，和子模块源码**无关**。
+
+------
+
+## 2. **什么时候会有“子模块变化”被记录？**
+
+- **如果你没有进入子模块目录去修改、pull、checkout、commit等操作**，那么主仓库里的子模块引用也不会变。
+- **如果你切换了子模块的分支或者commit**，主仓库会记录下“fatfs现在指向了哪个commit”，
+   但**这只是一个“指针”，不是子模块内容本身**。
+
+------
+
+## 3. **结论**
+
+> **用`git add .`和`git commit`，不会把submodule的源码传到主仓库。只会提交你主仓库的新文件/改动。如果你没动过submodule指针，连“指针变更”都不会记录。**
+
+
 
