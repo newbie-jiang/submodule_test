@@ -2,7 +2,3 @@
 	path = hal/driver
 	url = https://github.com/STMicroelectronics/stm32h7rsxx_hal_driver.git
 	branch = main
-[submodule "Drivers/CMSIS/Device/ST/STM32H7RSxx"]
-	path = Drivers/CMSIS/Device/ST/STM32H7RSxx
-	url = https://github.com/STMicroelectronics/cmsis_device_h7rs.git
-	branch = main
